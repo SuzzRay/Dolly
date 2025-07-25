@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Happy Birthday!</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: black;
+      overflow: hidden;
+      color: white;
+      font-family: 'Arial', sans-serif;
+    }
+
+    .center {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+      font-size: 4em;
+      z-index: 1000;
+      animation: fadeIn 1s ease-in-out;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .grid-container {
+      display: none;
+      grid-template-columns: repeat(3, 1fr);
+      height: 100vh;
+      width: 100vw;
+      position: relative;
+      z-index: 1;
+    }
+
+    .grid-container.show {
+      display: grid;
+    }
+
+    .image-strip {
+      display: flex;
+      flex-direction: column;
+      animation: scrollUp 20s linear infinite;
+    }
+
+    .image-strip.reverse {
+      animation: scrollDown 20s linear infinite;
+    }
+
+    .image-strip img {
+      width: 100%;
+      height: 33vh;
+      object-fit: cover;
+    }
+
+    @keyframes scrollUp {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(-50%); }
+    }
+
+    @keyframes scrollDown {
+      0% { transform: translateY(-50%); }
+      100% { transform: translateY(0); }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+
+<div id="countdown" class="center">5</div>
+<div id="wish" class="center hidden">🎉 Happy Birthday, Dolly Dii! 🎉</div>
+
+<div id="gallery" class="grid-container">
+  <div class="image-strip">
+    <img src="images/1.jpg" />
+    <img src="images/2.jpg" />
+    <img src="images/3.jpg" />
+    <img src="images/1.jpg" />
+    <img src="images/2.jpg" />
+    <img src="images/3.jpg" />
+  </div>
+  <div class="image-strip reverse">
+    <img src="images/4.jpg" />
+    <img src="images/5.jpg" />
+    <img src="images/6.jpg" />
+    <img src="images/4.jpg" />
+    <img src="images/5.jpg" />
+    <img src="images/6.jpg" />
+  </div>
+  <div class="image-strip">
+    <img src="images/2.jpg" />
+    <img src="images/3.jpg" />
+    <img src="images/1.jpg" />
+    <img src="images/2.jpg" />
+    <img src="images/3.jpg" />
+    <img src="images/1.jpg" />
+  </div>
+</div>
+
+<script>
+  let count = 5;
+  const countdownEl = document.getElementById("countdown");
+  const wishEl = document.getElementById("wish");
+  const galleryEl = document.getElementById("gallery");
+
+  galleryEl.classList.remove("show");
+
+  const countdown = setInterval(() => {
+    count--;
+    countdownEl.textContent = count;
+
+    if (count === 0) {
+      clearInterval(countdown);
+      countdownEl.classList.add("hidden");
+      wishEl.classList.remove("hidden");
+
+      setTimeout(() => {
+        wishEl.classList.add("hidden");
+        galleryEl.classList.add("show"); // show image grid
+      }, 2000);
+    }
+  }, 1000);
+</script>
+</body>
+</html>
